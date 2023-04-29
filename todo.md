@@ -1,2 +1,8 @@
-- internal style sheets
 - use
+- curves
+- filters
+- text
+- path
+- groups
+- transforms
+- gradients

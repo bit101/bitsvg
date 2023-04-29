@@ -18,6 +18,7 @@ func main() {
 	star.Class = "poly"
 
 	s.WriteToFile("out.svg")
-	svg.Convert("out.svg", "out.png")
-	util.ViewImage("out.png")
+	// svg.Convert("out.svg", "out.png")
+	// svg.ConvertToSize("out.svg", "out.png", 10000, 10000)
+	util.ViewImage("out.svg")
 }

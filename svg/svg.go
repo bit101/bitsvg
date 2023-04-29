@@ -81,6 +81,13 @@ func (s *SVG) AddRect(x, y, w, h float64) *Rect {
 	return r
 }
 
+// AddRegularPolygon adds a new Rect object to the SVG.
+func (s *SVG) AddRegularPolygon(x, y float64, points int, radius, rotation float64) *Polygon {
+	r := NewRegularPolygon(x, y, points, radius, rotation)
+	s.AddElement(r)
+	return r
+}
+
 // SetBackgroundRGB creates a background rect of the given color.
 func (s *SVG) SetBackgroundRGB(r, g, b int) {
 	s.BackgroundRect.SetFillRGB(r, g, b)

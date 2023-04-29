@@ -3,22 +3,19 @@ package svg
 
 import (
 	"encoding/xml"
+	"math"
 	"strconv"
 	"strings"
 )
 
-// EvenOdd is the fill rule "evenodd"
-const EvenOdd = "evenodd"
-
-// NonZero is the fill rule "NonZero"
-const NonZero = "nonzero"
-
 // Polygon creates a new Polygon object.
 type Polygon struct {
 	GraphicElement
-	XMLName  xml.Name `xml:"polygon"`
-	Points   string   `xml:"points,attr"`
-	FillRule string   `xml:"fill-rule,attr"`
+	XMLName    xml.Name `xml:"polygon"`
+	Points     string   `xml:"points,attr"`
+	FillRule   string   `xml:"fill-rule,attr"`
+	LineJoin   string   `xml:"stroke-linejoin,attr"`
+	MiterLimit float64  `xml:"stroke-miterlimit,attr"`
 }
 
 // NewPolygon creates a new Polygon object.
@@ -32,5 +29,27 @@ func NewPolygon(points ...float64) *Polygon {
 		GraphicElement: *NewGraphicElement(),
 		Points:         ps,
 		FillRule:       EvenOdd,
+		LineJoin:       Miter,
+		MiterLimit:     4,
 	}
+}
+
+// NewRegularPolygon created a regular polygon with the given number of points, radius and rotation.
+func NewRegularPolygon(x, y float64, numPoints int, radius, rotation float64) *Polygon {
+	coords := []float64{}
+	for i := 0; i < numPoints; i++ {
+		t := float64(i) / float64(numPoints) * math.Pi * 2
+		coords = append(coords, x+math.Cos(t+rotation)*radius, y+math.Sin(t+rotation)*radius)
+	}
+	return NewPolygon(coords...)
+}
+
+// SetLineJoin sets the line join of this polygon.
+func (p *Polygon) SetLineJoin(cap string) {
+	p.LineJoin = cap
+}
+
+// SetMiterLimit sets the miter limit of this polygon.
+func (p *Polygon) SetMiterLimit(limit float64) {
+	p.MiterLimit = limit
 }

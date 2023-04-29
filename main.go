@@ -10,16 +10,17 @@ func main() {
 	s.Description = "Just a thing I made"
 	s.SetBackgroundRGB(255, 128, 0)
 
-	points := []float64{
-		200, 100,
-		300, 300,
-		50, 150,
-		350, 250,
-		100, 300,
+	x := 200.0
+	y := 200.0
+	r := 0.0
+	for i := 0; i < 150; i++ {
+		q := s.AddRegularPolygon(x, y, 5, 100, r)
+		q.NoFill()
+		q.StrokeWidth = 0.5
+		x += 3
+		y += 3
+		r += 0.01
 	}
-	p := s.AddPolyline(points...)
-	p.SetStrokeWidth(10)
-	// p.SetFillRGB(255, 128, 0)
 
 	s.WriteToFile("out.svg")
 }

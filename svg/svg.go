@@ -40,6 +40,7 @@ func NewSVG(title string, width, height float64) *SVG {
 
 // SetStyleSheet adds a stylesheet to the SVG document, with the given path.
 func (s *SVG) SetStyleSheet(path string) {
+	fmt.Println("WARNING: external style sheets will be ignored when converting an SVG to another format such as PNG.")
 	s.StyleSheet = fmt.Sprintf("<?xml-stylesheet href=\"%s\" type=\"text/css\"?>\n", path)
 }
 

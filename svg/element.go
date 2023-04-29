@@ -18,13 +18,11 @@ type Element interface {
 
 	SetFillColor(color.Color)
 	SetFillRGB(int, int, int)
-	SetFillRGBA(int, int, int, float64)
 	SetFillOpacity(float64)
 	NoFill()
 
 	SetStrokeColor(color.Color)
 	SetStrokeRGB(int, int, int)
-	SetStrokeRGBA(int, int, int, float64)
 	SetStrokeWidth(float64)
 	SetStrokeOpacity(float64)
 	SetStrokeDash(...int)
@@ -65,17 +63,12 @@ func (ge *GraphicElement) SetFillColor(c color.Color) {
 	r := int(c.R * 255)
 	g := int(c.G * 255)
 	b := int(c.B * 255)
-	ge.SetFillRGBA(r, g, b, c.A)
+	ge.SetFillRGB(r, g, b)
 }
 
 // SetFillRGB sets the fill color of this element with rgb integer values and full opacity.
 func (ge *GraphicElement) SetFillRGB(r, g, b int) {
-	ge.SetFillRGBA(r, g, b, 1)
-}
-
-// SetFillRGBA sets the fill color of this element with rgba integer values.
-func (ge *GraphicElement) SetFillRGBA(r, g, b int, a float64) {
-	ge.Fill = fmt.Sprintf("rgba(%d, %d, %d, %f)", r, g, b, a)
+	ge.Fill = fmt.Sprintf("rgb(%d, %d, %d)", r, g, b)
 }
 
 // SetFillOpacity sets the opacity of the stroke on this element.
@@ -93,17 +86,12 @@ func (ge *GraphicElement) SetStrokeColor(c color.Color) {
 	r := int(c.R * 255)
 	g := int(c.G * 255)
 	b := int(c.B * 255)
-	ge.SetStrokeRGBA(r, g, b, c.A)
+	ge.SetStrokeRGB(r, g, b)
 }
 
 // SetStrokeRGB sets the stroke color of this element with rgb integer values and full opacity.
 func (ge *GraphicElement) SetStrokeRGB(r, g, b int) {
-	ge.SetStrokeRGBA(r, g, b, 255)
-}
-
-// SetStrokeRGBA sets the stroke color of this element with rgba integer values.
-func (ge *GraphicElement) SetStrokeRGBA(r, g, b int, a float64) {
-	ge.Stroke = fmt.Sprintf("rgba(%d, %d, %d, %f)", r, g, b, a)
+	ge.Stroke = fmt.Sprintf("rgb(%d, %d, %d)", r, g, b)
 }
 
 // SetStrokeWidth sets the width of the stroke on this element.

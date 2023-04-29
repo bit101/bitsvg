@@ -89,6 +89,13 @@ func (s *SVG) AddEllipse(x, y, rx, ry float64) *Ellipse {
 	return e
 }
 
+// AddGroup adds a new Group object to the SVG.
+func (s *SVG) AddGroup() *Group {
+	g := NewGroup()
+	s.AddElement(g)
+	return g
+}
+
 // AddLine adds a new Line object to the SVG.
 func (s *SVG) AddLine(x1, y1, x2, y2 float64) *Line {
 	l := NewLine(x1, y1, x2, y2)

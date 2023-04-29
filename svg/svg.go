@@ -18,8 +18,8 @@ type SVG struct {
 	Height         float64  `xml:"height,attr"`
 	Namespace      string   `xml:"xmlns,attr"`
 	Title          string   `xml:"title"`
-	Description    string   `xml:"desc"`
-	Style          string   `xml:"style"`
+	Description    string   `xml:"desc,omitempty"`
+	Style          string   `xml:"style,omitempty"`
 	BackgroundRect *Rect    `xml:"rect"`
 	Elements       []Element
 }

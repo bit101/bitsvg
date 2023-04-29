@@ -33,23 +33,24 @@ type Element interface {
 
 // GraphicElement represents an SVG Node.
 type GraphicElement struct {
-	ID            string  `xml:"id,attr"`
-	Stroke        string  `xml:"stroke,attr"`
-	Fill          string  `xml:"fill,attr"`
-	FillOpacity   float64 `xml:"fill-opacity,attr"`
-	StrokeWidth   float64 `xml:"stroke-width,attr"`
-	StrokeOpacity float64 `xml:"stroke-opacity,attr"`
-	StrokeDash    string  `xml:"stroke-dasharray,attr"`
-	Style         string  `xml:"style,attr"`
-	Class         string  `xml:"class,attr"`
+	ID            string  `xml:"id,attr,omitempty"`
+	Stroke        string  `xml:"stroke,attr,omitempty"`
+	Fill          string  `xml:"fill,attr,omitempty"`
+	FillOpacity   float64 `xml:"fill-opacity,attr,omitempty"`
+	StrokeWidth   float64 `xml:"stroke-width,attr,omitempty"`
+	StrokeOpacity float64 `xml:"stroke-opacity,attr,omitempty"`
+	StrokeDash    string  `xml:"stroke-dasharray,attr,omitempty"`
+	Style         string  `xml:"style,attr,omitempty"`
+	Class         string  `xml:"class,attr,omitempty"`
+	LineCap       string  `xml:"stroke-linecap,attr,omitempty"`
+	LineJoin      string  `xml:"stroke-linejoin,attr,omitempty"`
+	MiterLimit    float64 `xml:"stroke-miterlimit,attr,omitempty"`
 }
 
 // NewGraphicElement returns a new GraphicElement
 func NewGraphicElement() *GraphicElement {
 	return &GraphicElement{
-		FillOpacity:   1.0,
-		StrokeOpacity: 1.0,
-		Stroke:        "black",
+		Stroke: "black",
 	}
 }
 
@@ -116,6 +117,21 @@ func (ge *GraphicElement) SetStrokeDash(dash ...int) {
 // NoStroke sets the element to render without a stroke.
 func (ge *GraphicElement) NoStroke() {
 	ge.StrokeWidth = 0
+}
+
+// SetLineCap sets the line cap of this element.
+func (ge *GraphicElement) SetLineCap(cap string) {
+	ge.LineCap = cap
+}
+
+// SetLineJoin sets the line join of this polygon.
+func (ge *GraphicElement) SetLineJoin(cap string) {
+	ge.LineJoin = cap
+}
+
+// SetMiterLimit sets the miter limit of this polygon.
+func (ge *GraphicElement) SetMiterLimit(limit float64) {
+	ge.MiterLimit = limit
 }
 
 // SetStyle sets the style attribute.

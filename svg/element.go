@@ -134,7 +134,7 @@ func (ge *GraphicElement) SetMiterLimit(limit float64) {
 	ge.MiterLimit = limit
 }
 
-// SetStyle sets the style attribute.
+// SetStyle sets an inline style.
 func (ge *GraphicElement) SetStyle(style string) {
 	ge.Style = style
 }

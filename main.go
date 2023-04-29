@@ -9,19 +9,13 @@ import (
 func main() {
 	s := svg.NewSVG("my svg", 800, 800)
 	s.SetBackgroundRGB(255, 128, 0)
+	s.SetStyleSheet("style.css")
 
-	x := 100.0
-	y := 200.0
-	r := 0.0
-	for i := 0; i < 300; i++ {
-		q := s.AddStar(x, y, 5, 40, 100, r)
-		q.NoFill()
-		q.SetStrokeWidth(0.25)
+	rect := s.AddRect(200, 200, 400, 400)
+	rect.Class = "rect"
 
-		x += 2
-		y += 1.1
-		r += 0.01
-	}
+	star := s.AddStar(400, 400, 8, 100, 400, 0)
+	star.Class = "poly"
 
 	s.WriteToFile("out.svg")
 	svg.Convert("out.svg", "out.png")

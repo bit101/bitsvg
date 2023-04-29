@@ -4,11 +4,21 @@ package svg
 import (
 	"encoding/xml"
 	"errors"
-	"fmt"
 	"io/ioutil"
+	"log"
 )
 
 const doctype = "<!DOCTYPE svg PUBLIC \"-//W3C//DTD SVG 1.1//EN\" \"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd\">\n"
+
+// Defs will hold styles, etc.
+type Defs struct {
+	Style Style `xml:"style"`
+}
+
+type Style struct {
+	Type      string `xml:"type,attr"`
+	StyleData string `xml:",cdata"`
+}
 
 // SVG is a struct representing an SVG object.
 type SVG struct {
@@ -21,7 +31,16 @@ type SVG struct {
 	Description    string   `xml:"desc,omitempty"`
 	Style          string   `xml:"style,omitempty"`
 	BackgroundRect *Rect    `xml:"rect"`
+	Defs           Defs     `xml:"defs,omitempty"`
 	Elements       []Element
+}
+
+func loadStyle(path string) string {
+	styleData, err := ioutil.ReadFile(path)
+	if err != nil {
+		log.Fatal(err)
+	}
+	return string(styleData)
 }
 
 // NewSVG creates a new SVG instance.
@@ -33,15 +52,21 @@ func NewSVG(title string, width, height float64) *SVG {
 		Title:          title,
 		Width:          width,
 		Height:         height,
-		Style:          "background-color: white",
 		BackgroundRect: bgRect,
 	}
 }
 
-// SetStyleSheet adds a stylesheet to the SVG document, with the given path.
+// SetStyleSheet adds an internal stylesheet to the SVG document, with the given path.
+// The stylesheet is embedded in the SVG document at compile time.
+// Imagemagick convert respects the styles set there, but not external stylesheets.
 func (s *SVG) SetStyleSheet(path string) {
-	fmt.Println("WARNING: external style sheets will be ignored when converting an SVG to another format such as PNG.")
-	s.StyleSheet = fmt.Sprintf("<?xml-stylesheet href=\"%s\" type=\"text/css\"?>\n", path)
+	styleData := loadStyle(path)
+	s.Defs = Defs{
+		Style: Style{
+			Type:      "text/css",
+			StyleData: styleData,
+		},
+	}
 }
 
 // AddElement adds a new GraphicElement to the SVG.

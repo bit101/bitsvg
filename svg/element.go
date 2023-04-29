@@ -49,9 +49,7 @@ type GraphicElement struct {
 
 // NewGraphicElement returns a new GraphicElement
 func NewGraphicElement() *GraphicElement {
-	return &GraphicElement{
-		Stroke: "black",
-	}
+	return &GraphicElement{}
 }
 
 // SetID sets the id of the element.

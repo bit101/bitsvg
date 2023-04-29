@@ -11,11 +11,12 @@ func main() {
 	s.SetBackgroundRGB(255, 128, 0)
 	s.SetStyleSheet("style.css")
 
-	rect := s.AddRect(200, 200, 400, 400)
-	rect.Class = "rect"
+	star := s.AddStar(100, 100, 8, 40, 100, 0)
+	star.ID = "star"
 
-	star := s.AddStar(400, 400, 8, 100, 400, 0)
-	star.Class = "poly"
+	for i := 0.0; i < 200; i += 3 {
+		s.AddUse("#star", i, i)
+	}
 
 	s.WriteToFile("out.svg")
 	// svg.Convert("out.svg", "out.png")

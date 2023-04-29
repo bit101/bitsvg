@@ -15,6 +15,7 @@ type Defs struct {
 	Style Style `xml:"style"`
 }
 
+// Style respresents an internal stylesheet.
 type Style struct {
 	Type      string `xml:"type,attr"`
 	StyleData string `xml:",cdata"`
@@ -128,6 +129,13 @@ func (s *SVG) AddStar(x, y float64, points int, innerRadius, outerRadius, rotati
 	r := NewStar(x, y, points, innerRadius, outerRadius, rotation)
 	s.AddElement(r)
 	return r
+}
+
+// AddUse adds a new Use object to the SVG.
+func (s *SVG) AddUse(href string, x, y float64) *Use {
+	u := NewUse(href, x, y)
+	s.AddElement(u)
+	return u
 }
 
 // SetBackgroundRGB creates a background rect of the given color.

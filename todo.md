@@ -1,8 +1,7 @@
-- use
-- curves
-- filters
 - text
+- filters
 - path
+- curves
 - groups
 - transforms
 - gradients

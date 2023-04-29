@@ -4,12 +4,16 @@ package svg
 import (
 	"encoding/xml"
 	"errors"
+	"fmt"
 	"io/ioutil"
 )
+
+const doctype = "<!DOCTYPE svg PUBLIC \"-//W3C//DTD SVG 1.1//EN\" \"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd\">\n"
 
 // SVG is a struct representing an SVG object.
 type SVG struct {
 	XMLName        xml.Name `xml:"svg"`
+	StyleSheet     string   `xml:"-"`
 	Width          float64  `xml:"width,attr"`
 	Height         float64  `xml:"height,attr"`
 	Namespace      string   `xml:"xmlns,attr"`
@@ -32,6 +36,11 @@ func NewSVG(title string, width, height float64) *SVG {
 		Style:          "background-color: white",
 		BackgroundRect: bgRect,
 	}
+}
+
+// SetStyleSheet adds a stylesheet to the SVG document, with the given path.
+func (s *SVG) SetStyleSheet(path string) {
+	s.StyleSheet = fmt.Sprintf("<?xml-stylesheet href=\"%s\" type=\"text/css\"?>\n", path)
 }
 
 // AddElement adds a new GraphicElement to the SVG.
@@ -88,6 +97,13 @@ func (s *SVG) AddRegularPolygon(x, y float64, points int, radius, rotation float
 	return r
 }
 
+// AddStar adds a new Star object to the SVG.
+func (s *SVG) AddStar(x, y float64, points int, innerRadius, outerRadius, rotation float64) *Polygon {
+	r := NewStar(x, y, points, innerRadius, outerRadius, rotation)
+	s.AddElement(r)
+	return r
+}
+
 // SetBackgroundRGB creates a background rect of the given color.
 func (s *SVG) SetBackgroundRGB(r, g, b int) {
 	s.BackgroundRect.SetFillRGB(r, g, b)
@@ -99,8 +115,8 @@ func (s *SVG) WriteToFile(filename string) error {
 	if err != nil {
 		return errors.New("Unable to marshal svg: " + err.Error())
 	}
-	// add header
-	svg = []byte(xml.Header + string(svg))
+	// add headers, etc.
+	svg = []byte(xml.Header + s.StyleSheet + doctype + string(svg))
 
 	err = ioutil.WriteFile(filename, svg, 0x777)
 	if err != nil {

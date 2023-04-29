@@ -43,6 +43,7 @@ type GraphicElement struct {
 	StrokeOpacity float64 `xml:"stroke-opacity,attr"`
 	StrokeDash    string  `xml:"stroke-dasharray,attr"`
 	Style         string  `xml:"style,attr"`
+	Class         string  `xml:"class,attr"`
 }
 
 // NewGraphicElement returns a new GraphicElement

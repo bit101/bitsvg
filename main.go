@@ -7,18 +7,17 @@ import (
 
 func main() {
 	s := svg.NewSVG("my svg", 800, 800)
-	s.Description = "Just a thing I made"
 	s.SetBackgroundRGB(255, 128, 0)
+	s.SetStyleSheet("style.css")
 
-	x := 200.0
+	x := 100.0
 	y := 200.0
 	r := 0.0
-	for i := 0; i < 150; i++ {
-		q := s.AddRegularPolygon(x, y, 5, 100, r)
-		q.NoFill()
-		q.StrokeWidth = 0.5
-		x += 3
-		y += 3
+	for i := 0; i < 300; i++ {
+		q := s.AddStar(x, y, 5, 40, 100, r)
+		q.Class = "poly"
+		x += 2
+		y += 1.1
 		r += 0.01
 	}
 

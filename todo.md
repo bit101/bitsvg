@@ -1,5 +1,4 @@
-- path
-- curves
-- text on path
 - gradients
 - groups and symbols in defs
+- advanced curves
+- text on path

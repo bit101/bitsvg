@@ -68,6 +68,11 @@ func (ge *GraphicElement) SetFillColor(c color.Color) {
 	ge.SetFillRGB(r, g, b)
 }
 
+// SetFillRandom sets the fill to a random color.
+func (ge *GraphicElement) SetFillRandom() {
+	ge.SetFillColor(color.RandomRGB())
+}
+
 // SetFillRGB sets the fill color of this element with rgb integer values and full opacity.
 func (ge *GraphicElement) SetFillRGB(r, g, b int) {
 	ge.Fill = fmt.Sprintf("rgb(%d, %d, %d)", r, g, b)
@@ -75,7 +80,7 @@ func (ge *GraphicElement) SetFillRGB(r, g, b int) {
 
 // SetFillOpacity sets the opacity of the stroke on this element.
 func (ge *GraphicElement) SetFillOpacity(opacity float64) {
-	ge.FillOpacity = opacity
+	ge.FillOpacity = Round3(opacity)
 }
 
 // NoFill sets the fill of the element to "none".
@@ -98,12 +103,12 @@ func (ge *GraphicElement) SetStrokeRGB(r, g, b int) {
 
 // SetStrokeWidth sets the width of the stroke on this element.
 func (ge *GraphicElement) SetStrokeWidth(width float64) {
-	ge.StrokeWidth = width
+	ge.StrokeWidth = Round3(width)
 }
 
 // SetStrokeOpacity sets the width of the stroke on this element.
 func (ge *GraphicElement) SetStrokeOpacity(width float64) {
-	ge.StrokeOpacity = width
+	ge.StrokeOpacity = Round3(width)
 }
 
 // SetStrokeDash sets the dash values for a stroke.
@@ -132,7 +137,7 @@ func (ge *GraphicElement) SetLineJoin(cap string) {
 
 // SetMiterLimit sets the miter limit of this polygon.
 func (ge *GraphicElement) SetMiterLimit(limit float64) {
-	ge.MiterLimit = limit
+	ge.MiterLimit = Round3(limit)
 }
 
 // SetStyle sets an inline style.
@@ -151,27 +156,27 @@ func (ge *GraphicElement) SetFilters(filters ...string) {
 
 // RotateDeg rotates the element the given number of degrees.
 func (ge *GraphicElement) RotateDeg(deg float64) {
-	ge.Transform += fmt.Sprintf("rotate(%f) ", deg)
+	ge.Transform += fmt.Sprintf("rotate(%g) ", Round3(deg))
 }
 
 // RotateRad rotates the element the given number of radians.
 func (ge *GraphicElement) RotateRad(rad float64) {
-	ge.Transform += fmt.Sprintf("rotate(%f) ", rad*180/math.Pi)
+	ge.Transform += fmt.Sprintf("rotate(%g) ", Round3(rad*180/math.Pi))
 }
 
 // Translate rotates the element the given number of degrees.
 func (ge *GraphicElement) Translate(x, y float64) {
-	ge.Transform += fmt.Sprintf("translate(%f, %f) ", x, y)
+	ge.Transform += fmt.Sprintf("translate(%g, %g) ", Round3(x), Round3(y))
 }
 
 // Scale scales the element the given percent.
 func (ge *GraphicElement) Scale(x, y float64) {
-	ge.Transform += fmt.Sprintf("scale(%f, %f) ", x, y)
+	ge.Transform += fmt.Sprintf("scale(%g, %g) ", Round3(x), Round3(y))
 }
 
 // Uniscale scales the element the given percent.
 func (ge *GraphicElement) Uniscale(s float64) {
-	ge.Transform += fmt.Sprintf("scale(%f) ", s)
+	ge.Transform += fmt.Sprintf("scale(%g) ", Round3(s))
 }
 
 // IsElement returns true for Elements.

@@ -19,9 +19,9 @@ type Rect struct {
 func NewRect(x, y, w, h float64) *Rect {
 	return &Rect{
 		GraphicElement: *NewGraphicElement(),
-		X:              x,
-		Y:              y,
-		Width:          w,
-		Height:         h,
+		X:              Round3(x),
+		Y:              Round3(y),
+		Width:          Round3(w),
+		Height:         Round3(h),
 	}
 }

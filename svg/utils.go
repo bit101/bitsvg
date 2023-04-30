@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"log"
+	"math"
 	"os/exec"
 )
 
@@ -35,4 +36,9 @@ func LoadStyle(path string) string {
 		log.Fatal(err)
 	}
 	return string(styleData)
+}
+
+// Round3 rounds a number down to 3 decimals.
+func Round3(val float64) float64 {
+	return math.Round(val*1000) / 1000
 }

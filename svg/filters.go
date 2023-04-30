@@ -22,10 +22,10 @@ func NewDropShadow(id string, blur, strength, dx, dy float64) *FilterEffect {
 	fe := &FilterEffect{
 		ID: id,
 		Filter: fmt.Sprintf(`
-    <feGaussianBlur in="SourceAlpha" stdDeviation="%f"/> 
-    <feOffset dx="%f" dy="%f"/>
+    <feGaussianBlur in="SourceAlpha" stdDeviation="%g"/> 
+    <feOffset dx="%g" dy="%g"/>
     <feComponentTransfer>
-      <feFuncA type="linear" slope="%f"/>
+      <feFuncA type="linear" slope="%g"/>
     </feComponentTransfer>
     <feMerge> 
       <feMergeNode/>
@@ -41,7 +41,7 @@ func NewBlurFilter(id string, blur float64) *FilterEffect {
 	fe := &FilterEffect{
 		ID: id,
 		Filter: fmt.Sprintf(`
-    <feGaussianBlur in="SourceGraphic" stdDeviation="%f"/> 
+    <feGaussianBlur in="SourceGraphic" stdDeviation="%g"/> 
 		`, blur),
 	}
 	return fe
@@ -55,11 +55,11 @@ func NewGlowFilter(id string, blur, r, g, b, a float64) *FilterEffect {
 		Filter: fmt.Sprintf(`
     <feColorMatrix type="matrix"
 		  values=
-			"0 0 0 %f 0
-			 0 0 0 %f 0
-			 0 0 0 %f 0
-			 0 0 0 %f 0"/>
-		<feGaussianBlur stdDeviation="%f" result="blur"/>
+			"0 0 0 %g 0
+			 0 0 0 %g 0
+			 0 0 0 %g 0
+			 0 0 0 %g 0"/>
+		<feGaussianBlur stdDeviation="%g" result="blur"/>
     <feMerge> 
       <feMergeNode in="blur"/>
       <feMergeNode in="SourceGraphic"/> 

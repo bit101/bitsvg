@@ -2,8 +2,6 @@
 package main
 
 import (
-	"math"
-
 	"github.com/bit101/bitsvg/svg"
 	"github.com/bit101/blgo/random"
 	"github.com/bit101/blgo/util"
@@ -14,15 +12,19 @@ func main() {
 	s := svg.NewSVG("my svg", 800, 800)
 	s.SetBackgroundRGB(255, 255, 255)
 	s.AddStyleSheet("style.css")
-	star := s.AddStar(0, 0, 5, 40, 100, 0)
-	star.ID = "star"
+	drop := svg.NewDropShadow("drop", 4, 0.7, 4, 4)
+	drop.SetBoundPercent(40)
+	s.AddFilter(drop)
 
-	for i := 0.0; i < 360; i++ {
-		u := s.AddUse("star", 0, 0)
-		u.Translate(0+i*1.6, 400)
-		u.RotateRad(i * math.Pi / 180)
-		u.Uniscale(i / 180)
+	for i := 0; i < 1000; i++ {
+		c := s.AddCircle(random.FloatRange(0, 800), random.FloatRange(0, 800), random.FloatRange(10, 100))
+		c.SetFillRandom()
+		c.SetFilters("drop")
+
 	}
+
+	path := s.AddPath()
+	path.MoveTo(100, 100)
 
 	s.WriteToFile("out.svg")
 	svg.Convert("out.svg", "out.png")

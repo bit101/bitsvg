@@ -3,7 +3,7 @@ package svg
 
 import (
 	"encoding/xml"
-	"strconv"
+	"fmt"
 	"strings"
 )
 
@@ -18,7 +18,7 @@ type Polyline struct {
 func NewPolyline(points ...float64) *Polyline {
 	pointStrings := []string{}
 	for _, coord := range points {
-		pointStrings = append(pointStrings, strconv.FormatFloat(coord, 'f', 3, 64))
+		pointStrings = append(pointStrings, fmt.Sprintf("%g", Round3(coord)))
 	}
 	ps := strings.Join(pointStrings, ",")
 	polyline := &Polyline{

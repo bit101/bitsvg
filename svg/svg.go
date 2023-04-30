@@ -81,6 +81,13 @@ func (s *SVG) AddLine(x1, y1, x2, y2 float64) *Line {
 	return l
 }
 
+// AddPath adds a new Path object to the SVG.
+func (s *SVG) AddPath() *Path {
+	p := NewPath()
+	s.AddElement(p)
+	return p
+}
+
 // AddPolygon adds a new Polygon object to the SVG.
 func (s *SVG) AddPolygon(points ...float64) *Polygon {
 	p := NewPolygon(points...)

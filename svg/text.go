@@ -21,15 +21,15 @@ type Text struct {
 func NewText(x, y float64, text string) *Text {
 	return &Text{
 		GraphicElement: *NewGraphicElement(),
-		X:              x,
-		Y:              y,
+		X:              Round3(x),
+		Y:              Round3(y),
 		Text:           text,
 	}
 }
 
 // SetFontSize sets the size of the font used in this text.
 func (t *Text) SetFontSize(size float64) {
-	t.FontSize = size
+	t.FontSize = Round3(size)
 }
 
 // SetFontFamily sets the font family in this text.

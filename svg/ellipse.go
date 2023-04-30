@@ -17,9 +17,9 @@ type Ellipse struct {
 func NewEllipse(x, y, rx, ry float64) *Ellipse {
 	return &Ellipse{
 		GraphicElement: *NewGraphicElement(),
-		Cx:             x,
-		Cy:             y,
-		Rx:             rx,
-		Ry:             ry,
+		Cx:             Round3(x),
+		Cy:             Round3(y),
+		Rx:             Round3(rx),
+		Ry:             Round3(ry),
 	}
 }

@@ -17,10 +17,10 @@ type Line struct {
 func NewLine(x1, y1, x2, y2 float64) *Line {
 	line := &Line{
 		GraphicElement: *NewGraphicElement(),
-		X1:             x1,
-		Y1:             y1,
-		X2:             x2,
-		Y2:             y2,
+		X1:             Round3(x1),
+		Y1:             Round3(y1),
+		X2:             Round3(x2),
+		Y2:             Round3(y2),
 	}
 	line.Stroke = "black"
 	return line

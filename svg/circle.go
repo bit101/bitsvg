@@ -16,8 +16,8 @@ type Circle struct {
 func NewCircle(x, y, r float64) *Circle {
 	return &Circle{
 		GraphicElement: *NewGraphicElement(),
-		Cx:             x,
-		Cy:             y,
-		Radius:         r,
+		Cx:             Round3(x),
+		Cy:             Round3(y),
+		Radius:         Round3(r),
 	}
 }

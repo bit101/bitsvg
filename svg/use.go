@@ -17,7 +17,7 @@ func NewUse(id string, x, y float64) *Use {
 	return &Use{
 		GraphicElement: *NewGraphicElement(),
 		Href:           "#" + id,
-		X:              x,
-		Y:              y,
+		X:              Round3(x),
+		Y:              Round3(y),
 	}
 }

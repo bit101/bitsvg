@@ -3,8 +3,8 @@ package svg
 
 import (
 	"encoding/xml"
+	"fmt"
 	"math"
-	"strconv"
 	"strings"
 )
 
@@ -20,7 +20,7 @@ type Polygon struct {
 func NewPolygon(points ...float64) *Polygon {
 	pointStrings := []string{}
 	for _, coord := range points {
-		pointStrings = append(pointStrings, strconv.FormatFloat(coord, 'f', 3, 64))
+		pointStrings = append(pointStrings, fmt.Sprintf("%g", Round3(coord)))
 	}
 	ps := strings.Join(pointStrings, ",")
 	return &Polygon{

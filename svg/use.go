@@ -13,10 +13,10 @@ type Use struct {
 }
 
 // NewUse creates a new Use object.
-func NewUse(href string, x, y float64) *Use {
+func NewUse(id string, x, y float64) *Use {
 	return &Use{
 		GraphicElement: *NewGraphicElement(),
-		Href:           href,
+		Href:           "#" + id,
 		X:              x,
 		Y:              y,
 	}

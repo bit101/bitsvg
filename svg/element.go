@@ -45,7 +45,7 @@ type GraphicElement struct {
 	LineCap       string  `xml:"stroke-linecap,attr,omitempty"`
 	LineJoin      string  `xml:"stroke-linejoin,attr,omitempty"`
 	MiterLimit    float64 `xml:"stroke-miterlimit,attr,omitempty"`
-	Filter        string  `xml:"filter,attr,omitempty"`
+	Filters       string  `xml:"filter,attr,omitempty"`
 }
 
 // NewGraphicElement returns a new GraphicElement
@@ -136,6 +136,15 @@ func (ge *GraphicElement) SetMiterLimit(limit float64) {
 // SetStyle sets an inline style.
 func (ge *GraphicElement) SetStyle(style string) {
 	ge.Style = style
+}
+
+// SetFilters sets a list of filters to use on this element.
+func (ge *GraphicElement) SetFilters(filters ...string) {
+	var sb strings.Builder
+	for _, filter := range filters {
+		fmt.Fprintf(&sb, "url(#%s) ", filter)
+	}
+	ge.Filters = sb.String()
 }
 
 // IsElement returns true for Elements.

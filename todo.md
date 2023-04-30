@@ -1,6 +1,5 @@
-- transforms
-- filters
 - path
-- text on path
 - curves
+- text on path
 - gradients
+- groups and symbols in defs

@@ -3,6 +3,7 @@ package svg
 
 import (
 	"fmt"
+	"math"
 	"strconv"
 	"strings"
 
@@ -46,6 +47,7 @@ type GraphicElement struct {
 	LineJoin      string  `xml:"stroke-linejoin,attr,omitempty"`
 	MiterLimit    float64 `xml:"stroke-miterlimit,attr,omitempty"`
 	Filters       string  `xml:"filter,attr,omitempty"`
+	Transform     string  `xml:"transform,attr,omitempty"`
 }
 
 // NewGraphicElement returns a new GraphicElement
@@ -145,6 +147,31 @@ func (ge *GraphicElement) SetFilters(filters ...string) {
 		fmt.Fprintf(&sb, "url(#%s) ", filter)
 	}
 	ge.Filters = sb.String()
+}
+
+// RotateDeg rotates the element the given number of degrees.
+func (ge *GraphicElement) RotateDeg(deg float64) {
+	ge.Transform += fmt.Sprintf("rotate(%f) ", deg)
+}
+
+// RotateRad rotates the element the given number of radians.
+func (ge *GraphicElement) RotateRad(rad float64) {
+	ge.Transform += fmt.Sprintf("rotate(%f) ", rad*180/math.Pi)
+}
+
+// Translate rotates the element the given number of degrees.
+func (ge *GraphicElement) Translate(x, y float64) {
+	ge.Transform += fmt.Sprintf("translate(%f, %f) ", x, y)
+}
+
+// Scale scales the element the given percent.
+func (ge *GraphicElement) Scale(x, y float64) {
+	ge.Transform += fmt.Sprintf("scale(%f, %f) ", x, y)
+}
+
+// Uniscale scales the element the given percent.
+func (ge *GraphicElement) Uniscale(s float64) {
+	ge.Transform += fmt.Sprintf("scale(%f) ", s)
 }
 
 // IsElement returns true for Elements.

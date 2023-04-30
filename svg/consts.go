@@ -17,4 +17,17 @@ const (
 	Miter = "miter"
 	// Bevel is the stroke line join constant for "bevel"
 	Bevel = "bevel"
+
+	// Normal is the normal constant for font-weight or font-style
+	Normal = "normal"
+	// Bold is the bold font-weight constant.
+	Bold = "bold"
+	// Italic is the italic font-style constant.
+	Italic = "italic"
+	// Underline is the underline text-decoration constant.
+	Underline = "underline"
+	// Overline is the overline text-decoration constant.
+	Overline = "overline"
+	// LineThrough is the line-through text-decoration constant.
+	LineThrough = "line-through"
 )

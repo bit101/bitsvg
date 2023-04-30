@@ -138,6 +138,13 @@ func (s *SVG) AddStar(x, y float64, points int, innerRadius, outerRadius, rotati
 	return r
 }
 
+// AddText adds a new Text object to the SVG.
+func (s *SVG) AddText(x, y float64, text string) *Text {
+	t := NewText(x, y, text)
+	s.AddElement(t)
+	return t
+}
+
 // AddUse adds a new Use object to the SVG.
 func (s *SVG) AddUse(href string, x, y float64) *Use {
 	u := NewUse(href, x, y)

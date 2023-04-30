@@ -1,7 +1,6 @@
-- text
+- transforms
 - filters
 - path
+- text on path
 - curves
-- groups
-- transforms
 - gradients

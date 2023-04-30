@@ -3,24 +3,25 @@ package main
 
 import (
 	"github.com/bit101/bitsvg/svg"
+	"github.com/bit101/blgo/random"
 	"github.com/bit101/blgo/util"
 )
 
 func main() {
 	s := svg.NewSVG("my svg", 800, 800)
 	s.SetBackgroundRGB(255, 128, 0)
-	s.SetStyleSheet("style.css")
-	s.SetStyleSheet("style2.css")
+	s.AddStyleSheet("style.css")
+	s.AddStyleSheet("style2.css")
+	filter := svg.NewDropShadow("drop-shadow", 6, 0.7, 6, 6)
+	// filter.SetBoundPercent(35)
+	s.AddFilter(filter)
 
-	t := s.AddText(100, 100, "Hello world")
-	t.ID = "text"
-	t.FontSize = 18
-	t.FontFamily = "sans"
-	t.FontStyle = svg.Italic
-	t.TextDecoration = svg.Underline
-
-	star := s.AddStar(400, 400, 5, 40, 100, 0)
-	star.ID = "star"
+	for i := 0; i < 300; i++ {
+		size := random.FloatRange(50, 200)
+		star := s.AddStar(random.FloatRange(0, 800), random.FloatRange(0, 800), 5, size*0.4, size, 0)
+		star.SetFillRGB(random.IntRange(128, 255), random.IntRange(128, 255), random.IntRange(128, 255))
+		star.Filter = "url(#drop-shadow)"
+	}
 
 	s.WriteToFile("out.svg")
 	svg.Convert("out.svg", "out.png")

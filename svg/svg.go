@@ -37,26 +37,6 @@ func NewSVG(title string, width, height float64) *SVG {
 	}
 }
 
-// SetStyleSheet adds an internal stylesheet to the SVG document, with the given path.
-// The stylesheet is embedded in the SVG document at compile time.
-// Imagemagick convert respects the styles set there, but not external stylesheets.
-func (s *SVG) SetStyleSheet(path string) {
-	styleData := LoadStyle(path)
-	if s.Defs == nil {
-		s.Defs = &Defs{}
-	}
-	if s.Defs.Style == nil {
-		s.Defs.Style = []*StyleSheet{}
-	}
-	s.Defs.Style = append(s.Defs.Style, NewStyleSheet(styleData))
-
-}
-
-// AddElement adds a new GraphicElement to the SVG.
-func (s *SVG) AddElement(element Element) {
-	s.Elements = append(s.Elements, element)
-}
-
 // AddCircle adds a new Circle object to the SVG.
 func (s *SVG) AddCircle(x, y, r float64) *Circle {
 	c := NewCircle(x, y, r)
@@ -64,11 +44,27 @@ func (s *SVG) AddCircle(x, y, r float64) *Circle {
 	return c
 }
 
+// AddElement adds a new GraphicElement to the SVG.
+func (s *SVG) AddElement(element Element) {
+	s.Elements = append(s.Elements, element)
+}
+
 // AddEllipse adds a new Ellipse object to the SVG.
 func (s *SVG) AddEllipse(x, y, rx, ry float64) *Ellipse {
 	e := NewEllipse(x, y, rx, ry)
 	s.AddElement(e)
 	return e
+}
+
+// AddFilter adds an filter effect to the SVG.
+func (s *SVG) AddFilter(fe *FilterEffect) {
+	if s.Defs == nil {
+		s.Defs = &Defs{}
+	}
+	if s.Defs.FilterEffects == nil {
+		s.Defs.FilterEffects = []*FilterEffect{}
+	}
+	s.Defs.FilterEffects = append(s.Defs.FilterEffects, fe)
 }
 
 // AddGroup adds a new Group object to the SVG.
@@ -118,6 +114,19 @@ func (s *SVG) AddStar(x, y float64, points int, innerRadius, outerRadius, rotati
 	r := NewStar(x, y, points, innerRadius, outerRadius, rotation)
 	s.AddElement(r)
 	return r
+}
+
+// AddStyleSheet adds an internal stylesheet to the SVG document, with the given path.
+// The stylesheet is embedded in the SVG document at compile time.
+// Imagemagick convert respects the styles set there, but not external stylesheets.
+func (s *SVG) AddStyleSheet(path string) {
+	if s.Defs == nil {
+		s.Defs = &Defs{}
+	}
+	if s.Defs.Style == nil {
+		s.Defs.Style = []*StyleSheet{}
+	}
+	s.Defs.Style = append(s.Defs.Style, NewStyleSheet(path))
 }
 
 // AddText adds a new Text object to the SVG.

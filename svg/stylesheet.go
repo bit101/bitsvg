@@ -1,7 +1,10 @@
 // Package svg holds SVG object creation and manipulation methods.
 package svg
 
-import "encoding/xml"
+import (
+	"encoding/xml"
+	"fmt"
+)
 
 // StyleSheet respresents an internal stylesheet.
 type StyleSheet struct {
@@ -11,9 +14,10 @@ type StyleSheet struct {
 }
 
 // NewStyleSheet creates a new StyleSheet with the given style data.
-func NewStyleSheet(styleData string) *StyleSheet {
+func NewStyleSheet(path string) *StyleSheet {
+	styleData := LoadStyle(path)
 	return &StyleSheet{
 		Type:      "text/css",
-		StyleData: styleData,
+		StyleData: fmt.Sprintf("/* %s */\n%s", path, styleData),
 	}
 }

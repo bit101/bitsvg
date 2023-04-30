@@ -10,7 +10,7 @@ import (
 
 // Convert uses ImageMagick convert to convert an image from one format to another.
 func Convert(input, output string) {
-	cmd := exec.Command("convert", input, output)
+	cmd := exec.Command("rsvg-convert", input, "-o", output)
 	err := cmd.Run()
 	if err != nil {
 		log.Fatal(err)

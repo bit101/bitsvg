@@ -4,5 +4,5 @@ package svg
 // Defs holds styles, etc.
 type Defs struct {
 	Style         []*StyleSheet
-	FilterEffects []FilterEffect
+	FilterEffects []*FilterEffect
 }

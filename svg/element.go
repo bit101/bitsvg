@@ -45,6 +45,7 @@ type GraphicElement struct {
 	LineCap       string  `xml:"stroke-linecap,attr,omitempty"`
 	LineJoin      string  `xml:"stroke-linejoin,attr,omitempty"`
 	MiterLimit    float64 `xml:"stroke-miterlimit,attr,omitempty"`
+	Filter        string  `xml:"filter,attr,omitempty"`
 }
 
 // NewGraphicElement returns a new GraphicElement

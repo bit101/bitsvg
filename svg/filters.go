@@ -36,6 +36,39 @@ func NewDropShadow(id string, blur, strength, dx, dy float64) *FilterEffect {
 	return fe
 }
 
+// NewBlurFilter creates a new drop shadow filter effect
+func NewBlurFilter(id string, blur float64) *FilterEffect {
+	fe := &FilterEffect{
+		ID: id,
+		Filter: fmt.Sprintf(`
+    <feGaussianBlur in="SourceGraphic" stdDeviation="%f"/> 
+		`, blur),
+	}
+	return fe
+}
+
+// NewGlowFilter creates a new glow filter effect
+// rgba values are float64s in the range of 0.0 to 1.0.
+func NewGlowFilter(id string, blur, r, g, b, a float64) *FilterEffect {
+	fe := &FilterEffect{
+		ID: id,
+		Filter: fmt.Sprintf(`
+    <feColorMatrix type="matrix"
+		  values=
+			"0 0 0 %f 0
+			 0 0 0 %f 0
+			 0 0 0 %f 0
+			 0 0 0 %f 0"/>
+		<feGaussianBlur stdDeviation="%f" result="blur"/>
+    <feMerge> 
+      <feMergeNode in="blur"/>
+      <feMergeNode in="SourceGraphic"/> 
+    </feMerge>
+		`, r, g, b, a, blur),
+	}
+	return fe
+}
+
 // SetBoundPercent sets the bounds of the filter in terms of percent of the object's bounding box.
 // Sets all bounds with a single value.
 // The default values would be equivalent to passing 10 here, allowing for 10% more on each side.

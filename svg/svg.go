@@ -5,21 +5,9 @@ import (
 	"encoding/xml"
 	"errors"
 	"io/ioutil"
-	"log"
 )
 
 const doctype = "<!DOCTYPE svg PUBLIC \"-//W3C//DTD SVG 1.1//EN\" \"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd\">\n"
-
-// Defs will hold styles, etc.
-type Defs struct {
-	Style Style `xml:"style"`
-}
-
-// Style respresents an internal stylesheet.
-type Style struct {
-	Type      string `xml:"type,attr"`
-	StyleData string `xml:",cdata"`
-}
 
 // SVG is a struct representing an SVG object.
 type SVG struct {
@@ -32,16 +20,8 @@ type SVG struct {
 	Description    string   `xml:"desc,omitempty"`
 	Style          string   `xml:"style,omitempty"`
 	BackgroundRect *Rect    `xml:"rect"`
-	Defs           Defs     `xml:"defs,omitempty"`
+	Defs           *Defs    `xml:"defs,omitempty"`
 	Elements       []Element
-}
-
-func loadStyle(path string) string {
-	styleData, err := ioutil.ReadFile(path)
-	if err != nil {
-		log.Fatal(err)
-	}
-	return string(styleData)
 }
 
 // NewSVG creates a new SVG instance.
@@ -61,13 +41,15 @@ func NewSVG(title string, width, height float64) *SVG {
 // The stylesheet is embedded in the SVG document at compile time.
 // Imagemagick convert respects the styles set there, but not external stylesheets.
 func (s *SVG) SetStyleSheet(path string) {
-	styleData := loadStyle(path)
-	s.Defs = Defs{
-		Style: Style{
-			Type:      "text/css",
-			StyleData: styleData,
-		},
+	styleData := LoadStyle(path)
+	if s.Defs == nil {
+		s.Defs = &Defs{}
 	}
+	if s.Defs.Style == nil {
+		s.Defs.Style = []*StyleSheet{}
+	}
+	s.Defs.Style = append(s.Defs.Style, NewStyleSheet(styleData))
+
 }
 
 // AddElement adds a new GraphicElement to the SVG.

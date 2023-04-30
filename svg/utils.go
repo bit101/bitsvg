@@ -3,6 +3,7 @@ package svg
 
 import (
 	"fmt"
+	"io/ioutil"
 	"log"
 	"os/exec"
 )
@@ -25,4 +26,13 @@ func ConvertToSize(input, output string, width, height int) {
 	if err != nil {
 		log.Fatal(err)
 	}
+}
+
+// LoadStyle loads an external stylesheet and returns the content.
+func LoadStyle(path string) string {
+	styleData, err := ioutil.ReadFile(path)
+	if err != nil {
+		log.Fatal(err)
+	}
+	return string(styleData)
 }

@@ -12,11 +12,17 @@ func main() {
 	s := svg.NewSVG("my svg", 800, 800)
 	s.SetBackgroundRGB(255, 255, 255)
 
-	path := s.AddPath()
+	path := svg.NewPath()
 	path.MoveTo(100, 100)
 	path.CubicCurveTo(700, 100, 100, 300, 700, 700)
 	path.NoFill()
 	path.Stroke = "black"
+
+	g := s.AddGroupDef()
+	g.ID = "bez"
+	g.AddElement(path)
+
+	s.AddUse("bez", -100, -100)
 
 	s.WriteToFile("out.svg")
 	svg.Convert("out.svg", "out.png")

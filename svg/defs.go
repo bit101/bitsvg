@@ -5,4 +5,5 @@ package svg
 type Defs struct {
 	Style         []*StyleSheet
 	FilterEffects []*FilterEffect
+	Groups        []*Group
 }

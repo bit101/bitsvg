@@ -74,6 +74,19 @@ func (s *SVG) AddGroup() *Group {
 	return g
 }
 
+// AddGroupDef adds a new Group object to the SVG.
+func (s *SVG) AddGroupDef() *Group {
+	if s.Defs == nil {
+		s.Defs = &Defs{}
+	}
+	if s.Defs.Groups == nil {
+		s.Defs.Groups = []*Group{}
+	}
+	g := NewGroup()
+	s.Defs.Groups = append(s.Defs.Groups, g)
+	return g
+}
+
 // AddLine adds a new Line object to the SVG.
 func (s *SVG) AddLine(x1, y1, x2, y2 float64) *Line {
 	l := NewLine(x1, y1, x2, y2)
